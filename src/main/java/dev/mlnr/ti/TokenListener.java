@@ -22,9 +22,9 @@ public class TokenListener extends ListenerAdapter {
 			GistUtils.createGistWithToken(token, gistUrl -> {
 				channel.sendMessage(mention + ", i found a token in your message and sent it to <" + gistUrl + "> to be invalidated.").queue();
 			}, invalidResponseCode -> {
-				channel.sendMessage(mention + ", i found a token in your message but received **" + invalidResponseCode + "** while sending it to gists.").queue();
+				channel.sendMessage(mention + ", i found a token in your message but received **" + invalidResponseCode + "** while sending it to gists. Please regenerate the token yourself.").queue();
 			}, failure -> {
-				channel.sendMessage(mention + ", i found a token in your message but received an error while sending it to gists.").queue();
+				channel.sendMessage(mention + ", i found a token in your message but received an error while sending it to gists. Please regenerate the token yourself.").queue();
 			});
 		}
 	}
