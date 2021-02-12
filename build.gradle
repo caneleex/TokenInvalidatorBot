@@ -1,0 +1,26 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '6.1.0'
+}
+
+application {
+    mainClassName = 'dev.mlnr.ti.TokenInvalidator'
+}
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.3.0-alpha5'
+    implementation("net.dv8tion:JDA:4.2.0_227") {
+        exclude group: 'club.minnced', module: 'opus-java'
+    }
+}
+
+group = 'dev.mlnr'
+description = 'TokenInvalidator'
+
+shadowJar.setProperty('archiveFileName', 'TokenInvalidator.jar')
+compileJava.options.encoding = 'UTF-8'
