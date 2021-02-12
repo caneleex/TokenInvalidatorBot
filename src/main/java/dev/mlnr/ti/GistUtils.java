@@ -9,6 +9,8 @@ import okhttp3.RequestBody;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +20,8 @@ import java.util.function.IntConsumer;
 public class GistUtils {
 	private static final OkHttpClient OK_HTTP_CLIENT = new OkHttpClient();
 	private static final String GIST_API_URL = "https://api.github.com/gists";
+
+	private static final List<String> ALREADY_INVALIDATED_TOKENS = new ArrayList<>();
 
 	private static final ScheduledExecutorService SCHEDULER = Executors.newSingleThreadScheduledExecutor();
 	private static final Logger logger = LoggerFactory.getLogger(GistUtils.class);
@@ -46,6 +50,7 @@ public class GistUtils {
 				var responseJson = DataObject.fromJson(responseBody.string());
 				gistUrlConsumer.accept(responseJson.getString("html_url"));
 				scheduleGistDeletion(responseJson.getString("id"));
+				ALREADY_INVALIDATED_TOKENS.add(token);
 				return;
 			}
 			invalidCodeConsumer.accept(responseCode);
@@ -73,5 +78,9 @@ public class GistUtils {
 				logger.error("There was an error while deleting gist {}", gistId, ex);
 			}
 		}, 30, TimeUnit.MINUTES);
+	}
+
+	public static List<String> getAlreadyInvalidatedTokens() {
+		return ALREADY_INVALIDATED_TOKENS;
 	}
 }

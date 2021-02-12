@@ -15,7 +15,10 @@ public class TokenListener extends ListenerAdapter {
 			var token = matcher.group(0);
 			var channel = event.getChannel();
 			var mention = event.getAuthor().getAsMention();
-
+			if (GistUtils.getAlreadyInvalidatedTokens().contains(token)) {
+				channel.sendMessage(mention + ", i found a token in your message but it's already been invalidated.").queue();
+				return;
+			}
 			GistUtils.createGistWithToken(token, gistUrl -> {
 				channel.sendMessage(mention + ", i found a token in your message and sent it to <" + gistUrl + "> to be invalidated.").queue();
 			}, responseCode -> {
