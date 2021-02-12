@@ -33,6 +33,8 @@ public class GistUtils {
 		tokenPayload.put("token.txt", contentPayload);
 		payload.put("files", tokenPayload);
 
+		payload.put("public", true);
+
 		var requestBuilder = new Request.Builder();
 		requestBuilder.header("Authorization", "token " + System.getenv("TIGistToken"));
 		requestBuilder.url(GIST_API_URL);
