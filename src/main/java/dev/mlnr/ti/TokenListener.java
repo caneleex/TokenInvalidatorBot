@@ -12,14 +12,15 @@ public class TokenListener extends ListenerAdapter {
 
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-		if (event.getAuthor().isBot() || event.isWebhookMessage()) {
+		var author = event.getAuthor();
+		if (author.isBot() || event.isWebhookMessage()) {
 			return;
 		}
 		var matcher = TOKEN_REGEX.matcher(event.getMessage().getContentRaw());
 		if (matcher.find()) {
 			var token = matcher.group(0);
 			var channel = event.getChannel();
-			var mention = event.getAuthor().getAsMention();
+			var mention = author.getAsMention();
 			if (GistUtils.getAlreadyInvalidatedTokens().contains(token)) {
 				channel.sendMessage(mention + ", i found a token in your message but it's already been invalidated.").queue();
 				return;
