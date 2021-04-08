@@ -12,7 +12,7 @@ public class TokenListener extends ListenerAdapter {
 
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
-		var matcher = TOKEN_REGEX.matcher(event.getMessage().getContentStripped());
+		var matcher = TOKEN_REGEX.matcher(event.getMessage().getContentRaw());
 		if (matcher.find()) {
 			var token = matcher.group(0);
 			var channel = event.getChannel();

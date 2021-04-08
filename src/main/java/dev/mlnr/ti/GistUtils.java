@@ -1,6 +1,5 @@
 package dev.mlnr.ti;
 
-import net.dv8tion.jda.api.utils.data.DataArray;
 import net.dv8tion.jda.api.utils.data.DataObject;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
