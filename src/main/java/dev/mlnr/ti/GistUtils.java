@@ -36,7 +36,8 @@ public class GistUtils {
 		tokenPayload.put("token.txt", contentPayload);
 		payload.put("files", tokenPayload);
 
-		payload.put("description", "Token Invalidator Bot by cane#0570. The token was invalidated for you for your own safety.");
+		payload.put("description", "Token Invalidator Bot by cane#0570. The token was invalidated for you for your own safety. This gist will be deleted "
+				+ "30 minutes after creation.");
 		payload.put("public", true);
 
 		var requestBuilder = new Request.Builder();
