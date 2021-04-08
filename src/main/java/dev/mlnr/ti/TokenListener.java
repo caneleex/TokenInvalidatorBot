@@ -12,6 +12,9 @@ public class TokenListener extends ListenerAdapter {
 
 	@Override
 	public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
+		if (event.getAuthor().isBot() || event.isWebhookMessage()) {
+			return;
+		}
 		var matcher = TOKEN_REGEX.matcher(event.getMessage().getContentRaw());
 		if (matcher.find()) {
 			var token = matcher.group(0);
